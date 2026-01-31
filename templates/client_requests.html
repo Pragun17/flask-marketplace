@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}My Requests{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">My Requests</h2>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Applicants</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for req in requests %}
+        <tr>
+            <td>{{ req.title }}</td>
+
+            <td>
+                <span class="badge
+                    {{ 'bg-warning' if req.status=='Pending'
+                    else ('bg-success' if req.status=='Approved'
+                    else 'bg-danger') }}">
+                    {{ req.status }}
+                </span>
+            </td>
+
+            <td>
+                <a href="{{ url_for('view_applications', request_id=req.id) }}"
+                   class="btn btn-sm btn-primary">
+                    View Applications ({{ req.applications|length }})
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3" class="text-center">No requests found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

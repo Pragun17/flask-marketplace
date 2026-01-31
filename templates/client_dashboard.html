@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Client Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Client Dashboard</h2>
+    <a class="btn btn-success" href="{{ url_for('create_request') }}">New Request</a>
+</div>
+
+<a class="btn btn-primary mb-3" href="{{ url_for('client_requests') }}">View My Requests</a>
+{% endblock %}

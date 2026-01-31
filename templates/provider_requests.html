@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Provider Requests{% endblock %}
+
+{% block content %}
+<h2>All Client Requests</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Client</th>
+            <th>Apply</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for req in requests %}
+        <tr>
+            <td>{{ req.title }}</td>
+            <td>{{ req.description }}</td>
+
+            <td>
+                <span class="badge
+                    {{ 'bg-warning' if req.status=='Pending'
+                    else ('bg-success' if req.status=='Approved'
+                    else 'bg-danger') }}">
+                    {{ req.status }}
+                </span>
+            </td>
+
+            <td>{{ req.client.username }}</td>
+
+            <td>
+                <!-- Apply Form -->
+                <form action="{{ url_for('apply_to_request', request_id=req.id) }}"
+                      method="POST" class="d-flex gap-2">
+
+                    <input type="number"
+                           name="price"
+                           step="0.01"
+                           placeholder="Price"
+                           class="form-control form-control-sm"
+                           required>
+
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        Apply
+                    </button>
+                </form>
+            </td>
+        </tr>
+
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-center">No requests available.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

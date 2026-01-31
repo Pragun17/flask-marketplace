@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Applications{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Applications for "{{ req.title }}"</h2>
+
+<table class="table table-bordered align-middle">
+    <thead>
+        <tr>
+            <th>Provider</th>
+            <th>Price</th>
+            <th>Portfolio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.provider.username }}</td>
+            <td>₹ {{ app.price }}</td>
+            <td>
+                {% if app.provider.portfolio_url %}
+                    <a href="{{ app.provider.portfolio_url }}"
+                       target="_blank"
+                       class="btn btn-sm btn-outline-primary">
+                        View Portfolio
+                    </a>
+                {% else %}
+                    <span class="text-muted">Not Provided</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3" class="text-center">
+                No applications yet.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('client_requests') }}" class="btn btn-secondary">
+    Back
+</a>
+{% endblock %}
